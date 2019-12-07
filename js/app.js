@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function () {
     function refreshCodeList() {
         mainlist.innerHTML = '';
         authcodes.forEach(element => {
-            let code = window.otplib.authenticator.generate(element.secert);
+            let code = window.otplib.authenticator.generate(element.secret);
             let item = document.createElement('div');
             item.innerHTML = `<p class="code-row">${numberWithSpaces(code)}</p><p class="name-row">${element.name}</p>`;
             item.classList.add('authcode-item');
