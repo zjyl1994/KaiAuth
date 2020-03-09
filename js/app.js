@@ -4,6 +4,24 @@ window.addEventListener('DOMContentLoaded', function () {
     var authcodes = [], selectIndex = 0;
     var shortCodeBuffer = '';
     var shortCodeActive = false;
+    var softkeyBarStatus = 'mainlist';
+    var softkeyLayout = {
+        'mainlist': {
+            left: 'Add',
+            center: '',
+            right: 'Delete'
+        },
+        'questionbox': {
+            left: '',
+            center: 'OK',
+            right: 'Cancel'
+        },
+        'messagebox': {
+            left: '',
+            center: 'OK',
+            right: ''
+        }
+    }
     // load data.json
     fetch('data/data.json')
         .then(res => res.json())
@@ -11,13 +29,24 @@ window.addEventListener('DOMContentLoaded', function () {
             authcodes = out;
             refreshCodeList();
             updateRemaining();
+            changeSoftkeyLayout('mainlist');
         });
     // functions
+    function changeSoftkeyLayout(layout) {
+        if (layout in softkeyLayout) {
+            document.getElementById('softkey-left').innerText = softkeyLayout[layout].left;
+            document.getElementById('softkey-center').innerText = softkeyLayout[layout].center;
+            document.getElementById('softkey-right').innerText = softkeyLayout[layout].right;
+            softkeyBarStatus = layout;
+        }
+    }
     function updateRemaining() {
-        let remain = window.otplib.authenticator.timeRemaining();
-        document.getElementById('softkey-center').innerText = `Next in ${remain}s`;
-        if (remain === 30) {
-            refreshCodeList();
+        if (softkeyBarStatus === "mainlist") {
+            let remain = window.otplib.authenticator.timeRemaining();
+            document.getElementById('softkey-center').innerText = `Next in ${remain}s`;
+            if (remain === 30) {
+                refreshCodeList();
+            }
         }
     }
     function refreshCodeList() {
@@ -25,6 +54,7 @@ window.addEventListener('DOMContentLoaded', function () {
         authcodes.forEach(element => {
             let code = window.otplib.authenticator.generate(element.secret);
             let item = document.createElement('div');
+            item.dataset.id = element.id;
             item.innerHTML = `<p class="code-row">${numberWithSpaces(code)}</p><p class="name-row">${element.name}</p>`;
             item.classList.add('authcode-item');
             mainlist.appendChild(item);
@@ -41,6 +71,10 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     function numberWithSpaces(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+    function removeFromAuthcodes(index){
+        authcodes = authcodes.filter(obj => obj.id != index);
+        refreshCodeList();
     }
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
@@ -60,7 +94,11 @@ window.addEventListener('DOMContentLoaded', function () {
                 console.log("Left press");
                 break;
             case 'SoftRight':
-                console.log("Right press");
+                if(softkeyBarStatus === 'mainlist'){
+                    var activeElem = document.getElementsByClassName('active')[0];
+                    var activeId = activeElem.dataset.id;
+                    removeFromAuthcodes(activeId);
+                }
                 break;
             case 'Enter':
                 console.log("Enter press");
@@ -100,8 +138,8 @@ window.addEventListener('DOMContentLoaded', function () {
                 break;
             case '#':
                 shortCodeBuffer += '#';
-                if(shortCodeActive){
-                    switch(shortCodeBuffer){
+                if (shortCodeActive) {
+                    switch (shortCodeBuffer) {
                         case "*#0000#":
                             console.log("about");
                             break;
@@ -114,7 +152,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     }
                     shortCodeBuffer = '';
                     shortCodeActive = false;
-                }else{
+                } else {
                     shortCodeActive = true;
                 }
                 break;
