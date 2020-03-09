@@ -157,13 +157,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 if (shortCodeActive) {
                     switch (shortCodeBuffer) {
                         case "*#0000#":
-                            console.log("about");
+                            messagebox("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
                             break;
                         case "*#467678#":
-                            console.log("import");
+                            messagebox("import");
                             break;
                         case "*#397678#":
-                            console.log("export");
+                            messagebox("export");
                             break;
                     }
                     shortCodeBuffer = '';
