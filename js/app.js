@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // functions
     function updateRemaining(){
         let remain = window.otplib.authenticator.timeRemaining();
-        document.getElementById('footbar').innerText = `Next in ${remain}s`;
+        document.getElementById('softkey-center').innerText = `Next in ${remain}s`;
         if(remain === 30){
             refreshCodeList();
         }
