@@ -48,6 +48,13 @@ window.addEventListener('DOMContentLoaded', function () {
     function numberWithSpaces(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
+    function generateNewID(){
+        var maxID = 0;
+        authcodes.forEach(element => {
+            if(element.id > maxID) maxID = element.id;
+        });
+        return maxID + 1;
+    }
     // key
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
@@ -69,7 +76,26 @@ window.addEventListener('DOMContentLoaded', function () {
 				})
 				qrcode.onsuccess = function () {
 					qrcodeContent = this.result;
-                    alert(qrcodeContent);
+                    gaDetail = parseURI(qrcodeContent);
+                    if(gaDetail == null){
+                        alert('Not valid Google authenticator QR code.');
+                    }else{
+                        var totpName = gaDetail.label.account;
+                        if(gaDetail.label.issuer!=''){
+                            totpName = gaDetail.label.issuer + ':' + totpName;
+                        }
+                        if(gaDetail.query.hasOwnProperty('issuer')){
+                            totpName = gaDetail.query.issuer + ':' + totpName;
+                        }
+                        var item = {
+                            id: generateNewID(),
+                            name: totpName,
+                            secret: gaDetail.query.secret
+                        }
+                        authcodes.push(item);
+                        window.localStorage.setItem('authcodes', JSON.stringify(authcodes));
+                        init();
+                    }
 				}
                 break;
             case 'SoftRight':
