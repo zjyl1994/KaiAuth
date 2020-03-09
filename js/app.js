@@ -4,24 +4,6 @@ window.addEventListener('DOMContentLoaded', function () {
     var authcodes = [], selectIndex = 0;
     var shortCodeBuffer = '';
     var shortCodeActive = false;
-    var softkeyBarStatus = 'mainlist';
-    var softkeyLayout = {
-        'mainlist': {
-            left: 'Add',
-            center: '',
-            right: 'Delete'
-        },
-        'questionbox': {
-            left: '',
-            center: 'OK',
-            right: 'Cancel'
-        },
-        'messagebox': {
-            left: '',
-            center: 'OK',
-            right: ''
-        }
-    }
     // load data.json
     fetch('data/data.json')
         .then(res => res.json())
@@ -32,21 +14,11 @@ window.addEventListener('DOMContentLoaded', function () {
             changeSoftkeyLayout('mainlist');
         });
     // functions
-    function changeSoftkeyLayout(layout) {
-        if (layout in softkeyLayout) {
-            document.getElementById('softkey-left').innerText = softkeyLayout[layout].left;
-            document.getElementById('softkey-center').innerText = softkeyLayout[layout].center;
-            document.getElementById('softkey-right').innerText = softkeyLayout[layout].right;
-            softkeyBarStatus = layout;
-        }
-    }
     function updateRemaining() {
-        if (softkeyBarStatus === "mainlist") {
-            let remain = window.otplib.authenticator.timeRemaining();
-            document.getElementById('softkey-center').innerText = `Next in ${remain}s`;
-            if (remain === 30) {
-                refreshCodeList();
-            }
+        let remain = window.otplib.authenticator.timeRemaining();
+        document.getElementById('softkey-center').innerText = `Next in ${remain}s`;
+        if (remain === 30) {
+            refreshCodeList();
         }
     }
     function refreshCodeList() {
@@ -72,21 +44,6 @@ window.addEventListener('DOMContentLoaded', function () {
     function numberWithSpaces(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
-    function removeFromAuthcodes(index){
-        authcodes = authcodes.filter(obj => obj.id != index);
-        refreshCodeList();
-    }
-    // dialog
-    function messagebox(message){
-        changeSoftkeyLayout('messagebox');
-        document.getElementById('dialog-title').innerText = 'Message';
-        document.getElementById('dialog-content').innerText = message;
-        document.getElementById('dialogbox').style.display = 'block';  
-    }
-    function closedialog(){
-        changeSoftkeyLayout('mainlist');
-        document.getElementById('dialogbox').style.display = 'none';
-    }
     // key
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
@@ -103,21 +60,17 @@ window.addEventListener('DOMContentLoaded', function () {
                 selectItemByIndex();
                 break;
             case 'SoftLeft':
-                if(softkeyBarStatus === 'mainlist'){
-                    messagebox("test message");
-                }
+                alert("add");
                 break;
             case 'SoftRight':
-                if(softkeyBarStatus === 'mainlist'){
-                    var activeElem = document.getElementsByClassName('active')[0];
-                    var activeId = activeElem.dataset.id;
-                    removeFromAuthcodes(activeId);
+                var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
+                var result = confirm("Are you shure?");
+                if(result == true){
+                    authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
+                    refreshCodeList();
                 }
                 break;
             case 'Enter':
-                if(softkeyBarStatus === 'messagebox'){
-                    closedialog();
-                }
                 break;
             case '1':
                 shortCodeBuffer += '1';
@@ -157,13 +110,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 if (shortCodeActive) {
                     switch (shortCodeBuffer) {
                         case "*#0000#":
-                            messagebox("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
+                            alert("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
                             break;
                         case "*#467678#":
-                            messagebox("import");
+                            alert("import");
                             break;
                         case "*#397678#":
-                            messagebox("export");
+                            alert("export");
                             break;
                     }
                     shortCodeBuffer = '';
