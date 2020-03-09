@@ -31,12 +31,15 @@ window.addEventListener('DOMContentLoaded', function () {
             item.classList.add('authcode-item');
             mainlist.appendChild(item);
         });
-        mainlist.children[selectIndex].classList.add('active');
+        selectItemByIndex();
     }
     function selectItemByIndex() {
         [].forEach.call(mainlist.children, function (el) {
             el.classList.remove('active');
         });
+        if(mainlist.children.length <= selectIndex){
+            selectIndex = 0;
+        }
         let activeElem = mainlist.children[selectIndex];
         activeElem.classList.add('active');
         activeElem.scrollIntoViewIfNeeded(false);
@@ -64,7 +67,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'SoftRight':
                 var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
-                var result = confirm("Are you shure?");
+                var result = confirm("Are you sure?");
                 if(result == true){
                     authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
                     refreshCodeList();
