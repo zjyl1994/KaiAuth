@@ -12,5 +12,21 @@
   "developer": {
     "name": "zjyl1994",
     "url": "https://www.zjyl1994.com"
-  }
+  },
+  "origin": "app://kaiauth.zjyl1994.com",
+  "type": "privileged",
+		"permissions": {
+		"storage": {},
+		"device-storage:sdcard": {
+			"description": "Required for import or export data",
+			"access": "readwrite"
+		}
+	},
+  "activities": {
+		"com.zjyl1994.kaiauth.addCode": {
+			"href": "./add.html",
+			"disposition": "inline",
+			"returnValue": true
+		}
+	}
 }

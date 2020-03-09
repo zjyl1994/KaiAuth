@@ -64,7 +64,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 selectItemByIndex();
                 break;
             case 'SoftLeft':
-                alert("add");
+                var qrcode = new MozActivity({
+					name: 'com.zjyl1994.kaiauth.addCode'
+				})
+				qrcode.onsuccess = function () {
+					qrcodeContent = this.result;
+                    alert(qrcodeContent);
+				}
                 break;
             case 'SoftRight':
                 var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
@@ -112,7 +118,6 @@ window.addEventListener('DOMContentLoaded', function () {
             case '#':
                 shortCodeBuffer += '#';
                 if (shortCodeActive) {
-                    console.log(shortCodeBuffer);
                     switch (shortCodeBuffer) {
                         case "*#0000#":
                             alert("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
