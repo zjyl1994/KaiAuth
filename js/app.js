@@ -76,6 +76,18 @@ window.addEventListener('DOMContentLoaded', function () {
         authcodes = authcodes.filter(obj => obj.id != index);
         refreshCodeList();
     }
+    // dialog
+    function messagebox(message){
+        changeSoftkeyLayout('messagebox');
+        document.getElementById('dialog-title').innerText = 'Message';
+        document.getElementById('dialog-content').innerText = message;
+        document.getElementById('dialogbox').style.display = 'block';  
+    }
+    function closedialog(){
+        changeSoftkeyLayout('mainlist');
+        document.getElementById('dialogbox').style.display = 'none';
+    }
+    // key
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
             case 'ArrowUp': //scroll up
@@ -91,7 +103,9 @@ window.addEventListener('DOMContentLoaded', function () {
                 selectItemByIndex();
                 break;
             case 'SoftLeft':
-                console.log("Left press");
+                if(softkeyBarStatus === 'mainlist'){
+                    messagebox("test message");
+                }
                 break;
             case 'SoftRight':
                 if(softkeyBarStatus === 'mainlist'){
@@ -101,7 +115,9 @@ window.addEventListener('DOMContentLoaded', function () {
                 }
                 break;
             case 'Enter':
-                console.log("Enter press");
+                if(softkeyBarStatus === 'messagebox'){
+                    closedialog();
+                }
                 break;
             case '1':
                 shortCodeBuffer += '1';
