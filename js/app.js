@@ -4,14 +4,17 @@ window.addEventListener('DOMContentLoaded', function () {
     var authcodes = [], selectIndex = 0;
     var shortCodeBuffer = '';
     var shortCodeActive = false;
-    if(window.localStorage.getItem("authcodes")!=null){
-        authcodes = JSON.parse(window.localStorage.getItem("authcodes"));
-    }else{
-        authcodes = [];
-    }
-    refreshCodeList();
-    updateRemaining();
+    init();
     // functions
+    function init(){
+        if(window.localStorage.getItem("authcodes")!=null){
+            authcodes = JSON.parse(window.localStorage.getItem("authcodes"));
+        }else{
+            authcodes = [];
+        }
+        refreshCodeList();
+        updateRemaining();
+    }
     function updateRemaining() {
         let remain = window.otplib.authenticator.timeRemaining();
         document.getElementById('softkey-center').innerText = `Next in ${remain}s`;
@@ -120,16 +123,19 @@ window.addEventListener('DOMContentLoaded', function () {
                         case "*#397678#":
                             alert("export");
                             break;
-                        case "*#33284#":
+                        case "*#3280#":
                             fetch('data/data.json')
                             .then(res => res.text())
                             .then((out) => {
                                 window.localStorage.setItem('authcodes', out);
-                                authcodes = JSON.parse(out);
-                                alert("example loaded");
-                                refreshCodeList();
-                                updateRemaining();
+                                alert("debug data loaded");
+                                init();
                             });
+                            break;
+                        case "*#7370#":
+                            window.localStorage.clear();
+                            alert("localStorage cleaned")
+                            init();
                             break;
                     }
                     shortCodeBuffer = '';
