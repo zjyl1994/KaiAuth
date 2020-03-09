@@ -17,6 +17,7 @@
   "type": "privileged",
 		"permissions": {
 		"storage": {},
+    "video-capture":{},
 		"device-storage:sdcard": {
 			"description": "Required for import or export data",
 			"access": "readwrite"
