@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     function updateRemaining() {
         let remain = window.otplib.authenticator.timeRemaining();
-        document.getElementById('softkey-center').innerText = `${remain}s`;
+        document.getElementById('time-remaining').innerText = `${remain}s`;
         if (remain === 30) {
             refreshCodeList();
         }
