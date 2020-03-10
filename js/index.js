@@ -55,6 +55,34 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         return maxID + 1;
     }
+    function loadSDFile(){
+        var sdcard = navigator.getDeviceStorage('sdcard');
+        var request = sdcard.get("kaiauth.json");
+        request.onsuccess = function () {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                window.localStorage.setItem('authcodes',reader.result);
+                alert("Load kaiauth.json successful.");
+                init();
+            }
+            reader.readAsBinaryString(this.result)
+        }
+        request.onerror = function () {
+            alert("Unable to get the file: " + this.error);
+        }
+    }
+    function dumpSDFile(){
+        var sdcard = navigator.getDeviceStorage('sdcard');
+        var file = new Blob([window.localStorage.getItem("authcodes")], {type: "application/json"});
+        var request = sdcard.addNamed(file, "kaiauth.json");
+        request.onsuccess = function () {
+            var name = this.result;
+            alert("Dump kaiauth.json successful.");
+        }
+        request.onerror = function () {
+            alert('Unable to write the file: ' + this.error);
+        }
+    }
     // key
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
@@ -149,19 +177,10 @@ window.addEventListener('DOMContentLoaded', function () {
                             alert("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
                             break;
                         case "*#467678#":
-                            alert("import");
+                            loadSDFile();
                             break;
                         case "*#397678#":
-                            alert("export");
-                            break;
-                        case "*#3280#":
-                            fetch('data/data.json')
-                            .then(res => res.text())
-                            .then((out) => {
-                                window.localStorage.setItem('authcodes', out);
-                                alert("debug data loaded");
-                                init();
-                            });
+                            dumpSDFile();
                             break;
                         case "*#7370#":
                             window.localStorage.clear();
