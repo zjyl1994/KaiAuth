@@ -124,6 +124,8 @@ window.addEventListener('DOMContentLoaded', function () {
                         authcodes.push(item);
                         window.localStorage.setItem('authcodes', JSON.stringify(authcodes));
                         init();
+                        selectIndex = authcodes.length - 1;
+                        selectItemByIndex();
                     }
 				}
                 break;
