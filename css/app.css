@@ -45,6 +45,7 @@ p {
     justify-content: space-between;
 }
 
-#softkey-center{
+#next-text, #softkey-center{
+    font-size: 16px;
     font-weight: 800;
 }

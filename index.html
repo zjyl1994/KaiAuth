@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
-    
   </head>
 
   <body>
@@ -18,9 +17,12 @@
     <section id="authcodes">
     </section>
     <footer id="softkey-bar">
-      <p id="softkey-left" data-l10n-id="add">Add</p>
-      <p id="softkey-center"></p>
-      <p id="softkey-right" data-l10n-id="delete">Delete</p>
+        <p id="softkey-left" data-l10n-id="add">Add</p>
+        <div style="font-size: 0;">
+            <span id="next-text" data-l10n-id="next"></span>
+            <span id="softkey-center"></span>
+        </div>
+        <p id="softkey-right" data-l10n-id="delete">Delete</p>
     </footer>
     <script type="text/javascript" src="js/libs/parseURI.js"></script>
     <script type="text/javascript" src="js/libs/scrollIntoView.js"></script>
