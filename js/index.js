@@ -109,11 +109,12 @@ window.addEventListener('DOMContentLoaded', function () {
                         alert('Not valid Google authenticator QR code.');
                     }else{
                         var totpName = gaDetail.label.account;
-                        if(gaDetail.label.issuer!=''){
+                        if(gaDetail.label.issuer){
                             totpName = gaDetail.label.issuer + ':' + totpName;
-                        }
-                        if(gaDetail.query.hasOwnProperty('issuer')){
-                            totpName = gaDetail.query.issuer + ':' + totpName;
+                        }else{
+                            if(gaDetail.query.hasOwnProperty('issuer')){
+                                totpName = gaDetail.query.issuer + ':' + totpName;
+                            }
                         }
                         var item = {
                             id: generateNewID(),
