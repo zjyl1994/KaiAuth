@@ -36,6 +36,49 @@ window.addEventListener('DOMContentLoaded', function () {
             selectItemByIndex();
         }
     }
+    function shortcodeKeyPress(key){
+        if(key == 'Enter'){
+            shortCodeBuffer = '';
+            shortCodeActive = false;
+        }
+        if(key.length == 1){
+            shortCodeBuffer += key;
+        }
+        if(shortCodeActive){
+            document.getElementById('title').innerText = shortCodeBuffer;
+        }else{
+            document.getElementById('title').innerText = "KaiAuth";
+        }
+        if(key == '#'){
+            if(shortCodeActive){
+                switch (shortCodeBuffer) {
+                    case "*#0000#":
+                        alert("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
+                        break;
+                    case "*#467678#":
+                        loadSDFile();
+                        break;
+                    case "*#397678#":
+                        dumpSDFile();
+                        break;
+                    case "*#7370#":
+                        var result = confirm("Confirm to clean localStorage?(will lost all data!!!)");
+                        if(result == true){
+                            window.localStorage.clear();
+                            alert("localStorage cleaned")
+                            init();
+                        }
+                        break;
+                }
+                shortCodeBuffer = '';
+                shortCodeActive = false;
+                document.getElementById('title').innerText = "KaiAuth";
+            }else{
+                shortCodeActive = true;
+                document.getElementById('title').innerText = shortCodeBuffer;
+            }
+        }
+    }
     function selectItemByIndex() {
         [].forEach.call(mainlist.children, function (el) {
             el.classList.remove('active');
@@ -68,7 +111,8 @@ window.addEventListener('DOMContentLoaded', function () {
             reader.readAsText(this.result)
         }
         request.onerror = function () {
-            alert("Unable to get the file: " + this.error.message);
+            alert("Unable to get the file: " + this.error.name);
+            console.error(this.error);
         }
     }
     function dumpSDFile(){
@@ -80,7 +124,8 @@ window.addEventListener('DOMContentLoaded', function () {
             alert("Dump kaiauth.json successful.");
         }
         request.onerror = function () {
-            alert('Unable to write the file: ' + this.error.message);
+            alert('Unable to write the file: ' + this.error.name);
+            console.error(this.error);
         }
     }
     // key
@@ -137,66 +182,8 @@ window.addEventListener('DOMContentLoaded', function () {
                     refreshCodeList();
                 }
                 break;
-            case 'Enter':
-                break;
-            case '1':
-                shortCodeBuffer += '1';
-                break;
-            case '2':
-                shortCodeBuffer += '2';
-                break;
-            case '3':
-                shortCodeBuffer += '3';
-                break;
-            case '4':
-                shortCodeBuffer += '4';
-                break;
-            case '5':
-                shortCodeBuffer += '5';
-                break;
-            case '6':
-                shortCodeBuffer += '6';
-                break;
-            case '7':
-                shortCodeBuffer += '7';
-                break;
-            case '8':
-                shortCodeBuffer += '8';
-                break;
-            case '9':
-                shortCodeBuffer += '9';
-                break;
-            case '0':
-                shortCodeBuffer += '0';
-                break;
-            case '*':
-                shortCodeBuffer += '*';
-                break;
-            case '#':
-                shortCodeBuffer += '#';
-                if (shortCodeActive) {
-                    switch (shortCodeBuffer) {
-                        case "*#0000#":
-                            alert("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
-                            break;
-                        case "*#467678#":
-                            loadSDFile();
-                            break;
-                        case "*#397678#":
-                            dumpSDFile();
-                            break;
-                        case "*#7370#":
-                            window.localStorage.clear();
-                            alert("localStorage cleaned")
-                            init();
-                            break;
-                    }
-                    shortCodeBuffer = '';
-                    shortCodeActive = false;
-                } else {
-                    shortCodeActive = true;
-                }
-                break;
+            default:
+                shortcodeKeyPress(e.key);
         }
     });
 }, false);
