@@ -1,5 +1,7 @@
 # KaiAuth
 
+![KaiAuth icon](img/icons/app_56.png)
+
 KaiAuth is a simple Google Authenticator alternative on KaiOS.
 
 You can find prebuild release in https://github.com/zjyl1994/KaiAuth/releases.
