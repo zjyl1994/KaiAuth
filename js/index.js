@@ -117,14 +117,21 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     function dumpSDFile(){
         var sdcard = navigator.getDeviceStorage('sdcard');
-        var file = new Blob([window.localStorage.getItem("authcodes")], {type: "application/json"});
-        var request = sdcard.addNamed(file, "kaiauth.json");
-        request.onsuccess = function () {
-            var name = this.result;
-            alert("Dump kaiauth.json successful.");
+        var deleteRequest = sdcard.delete("kaiauth.json");
+        deleteRequest.onsuccess = function () {
+            var file = new Blob([window.localStorage.getItem("authcodes")], {type: "application/json"});
+            var writeRequest = sdcard.addNamed(file, "kaiauth.json");
+            writeRequest.onsuccess = function () {
+                var name = this.result;
+                alert("Dump kaiauth.json successful.");
+            }
+            writeRequest.onerror = function () {
+                alert('Unable to write the file: ' + this.error.name);
+                console.error(this.error);
+            }
         }
-        request.onerror = function () {
-            alert('Unable to write the file: ' + this.error.name);
+        deleteRequest.onerror = function () {
+            alert(this.error.name);
             console.error(this.error);
         }
     }
