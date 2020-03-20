@@ -65,10 +65,10 @@ window.addEventListener('DOMContentLoaded', function () {
                 alert("Load kaiauth.json successful.");
                 init();
             }
-            reader.readAsBinaryString(this.result)
+            reader.readAsText(this.result)
         }
         request.onerror = function () {
-            alert("Unable to get the file: " + this.error);
+            alert("Unable to get the file: " + this.error.message);
         }
     }
     function dumpSDFile(){
@@ -80,7 +80,7 @@ window.addEventListener('DOMContentLoaded', function () {
             alert("Dump kaiauth.json successful.");
         }
         request.onerror = function () {
-            alert('Unable to write the file: ' + this.error);
+            alert('Unable to write the file: ' + this.error.message);
         }
     }
     // key
