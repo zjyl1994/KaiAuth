@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', function () {
     setInterval(updateRemaining, 1000);
+    var translate = navigator.mozL10n.get;
     var mainlist = document.getElementById('authcodes');
     var authcodes = [], selectIndex = 0;
     var shortCodeBuffer = '';
@@ -53,7 +54,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if(shortCodeActive){
                 switch (shortCodeBuffer) {
                     case "*#0000#":
-                        alert("KaiAuth v1.0.0\nCopyright 2020 zjyl1994\nAll rights reserved");
+                        alert("KaiAuth v1.0.3\nCopyright 2020 zjyl1994\nAll rights reserved");
                         break;
                     case "*#467678#":
                         loadSDFile();
@@ -62,10 +63,10 @@ window.addEventListener('DOMContentLoaded', function () {
                         dumpSDFile();
                         break;
                     case "*#7370#":
-                        var result = confirm("Confirm to clean localStorage?(will lost all data!!!)");
+                        var result = confirm(translate('reset-confirm'));
                         if(result == true){
                             window.localStorage.clear();
-                            alert("localStorage cleaned")
+                            alert(translate('reset-success'))
                             init();
                         }
                         break;
@@ -105,13 +106,13 @@ window.addEventListener('DOMContentLoaded', function () {
             var reader = new FileReader();
             reader.onload = function(e) {
                 window.localStorage.setItem('authcodes',reader.result);
-                alert("Load kaiauth.json successful.");
+                alert(translate('load-success'));
                 init();
             }
             reader.readAsText(this.result)
         }
         request.onerror = function () {
-            alert("Unable to get the file: " + this.error.name);
+            alert(translate('load-error') + this.error.name);
             console.error(this.error);
         }
     }
@@ -123,10 +124,10 @@ window.addEventListener('DOMContentLoaded', function () {
             var writeRequest = sdcard.addNamed(file, "kaiauth.json");
             writeRequest.onsuccess = function () {
                 var name = this.result;
-                alert("Dump kaiauth.json successful.");
+                alert(translate('dump-success'));
             }
             writeRequest.onerror = function () {
-                alert('Unable to write the file: ' + this.error.name);
+                alert(translate('dump-error') + this.error.name);
                 console.error(this.error);
             }
         }
@@ -158,7 +159,7 @@ window.addEventListener('DOMContentLoaded', function () {
 					qrcodeContent = this.result;
                     gaDetail = parseURI(qrcodeContent);
                     if(gaDetail == null){
-                        alert('Not valid Google authenticator QR code.');
+                        alert(translate('valid-qrcode'));
                     }else{
                         var totpName = gaDetail.label.account;
                         if(gaDetail.label.issuer){
@@ -183,7 +184,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'SoftRight':
                 var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
-                var result = confirm("Are you sure?");
+                var result = confirm(translate('delete-confirm'));
                 if(result == true){
                     authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
                     refreshCodeList();
