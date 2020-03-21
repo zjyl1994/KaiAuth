@@ -30,12 +30,5 @@
 			"returnValue": true
 		}
 	},
-  "locales": {
-    "zh-CN": {
-      "name": "",
-      "description": "",
-      "permissions": {}
-    }
-  },
   "default_locale": "en-US"
 }
