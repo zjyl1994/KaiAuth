@@ -1,8 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "KaiAuth",
   "description": "Simple Google Authenticator alternative",
-  "type": "web",
   "theme_color": "#0F4C81",
   "launch_path": "/index.html",
   "icons": {
@@ -16,7 +15,6 @@
   "origin": "app://kaiauth.zjyl1994.com",
   "type": "privileged",
 		"permissions": {
-		"storage": {},
     "video-capture":{},
 		"device-storage:sdcard": {
 			"description": "Required for import or export data",
@@ -30,5 +28,25 @@
 			"returnValue": true
 		}
 	},
-  "default_locale": "en-US"
+  "default_locale": "en-US",
+  "subtitle":"Simple Google Authenticator alternative",
+  "categories": ["utilities"],
+  "locales": {
+    "en-US": {
+      "name": "KaiAuth",
+      "description": "An easy-to-use TOTP 2-step verification code generation tool, like Google Authenticator!"
+    },
+    "zh-CN": {
+      "name": "KaiAuth",
+      "description": "一个简单易用的TOTP两步验证代码生成工具，就像谷歌身份验证器一样！"
+    },
+    "zh-TW": {
+      "name": "KaiAuth",
+      "description": "一個簡單易用的TOTP兩步驟驗證代碼生成工具，就像谷歌身份驗證器一樣！"
+    },
+    "zh-HK": {
+      "name": "KaiAuth",
+      "description": "一個簡單易用嘅TOTP兩步驟驗證代碼生成工具，就像谷歌身份驗證器一樣！"
+    }
+  }
 }

@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if(shortCodeActive){
                 switch (shortCodeBuffer) {
                     case "*#0000#":
-                        alert("KaiAuth v1.0.3\nCopyright 2020 zjyl1994\nAll rights reserved");
+                        alert("KaiAuth v1.1.0\nCopyright 2020 zjyl1994\nAll rights reserved");
                         break;
                     case "*#467678#":
                         loadSDFile();
