@@ -24,9 +24,22 @@
 .authcode-item > .code-row {
     padding:2px 2px 2px 2px;
     font-size: 2em;
+    display:flex;
+    justify-content:space-between;
 }
 
 .authcode-item > .name-row {
     padding:2px 2px 2px 2px;
     font-size: 1em;
+}
+
+.progress {
+    transform: rotate(-90deg);
+    padding:2px 2px 2px 2px;
+}
+
+.progress_value {
+    fill: none;
+	stroke: #eee;
+	stroke-linecap: round;
 }

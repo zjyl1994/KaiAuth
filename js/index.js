@@ -18,8 +18,13 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     function updateRemaining() {
         let remain = window.otplib.authenticator.timeRemaining();
-        document.getElementById('time-remaining').innerText = `${remain}s`;
-        if (remain === 30) {
+        let step = window.otplib.authenticator.allOptions().step;
+        var processValue = document.getElementsByClassName('progress_value');
+        [].forEach.call(processValue, element => {
+            element.style.strokeDasharray = 2 * Math.PI * 54;
+            element.style.strokeDashoffset = 2 * Math.PI * 54 * (1 - remain / step);
+        });
+        if (remain === step) {
             refreshCodeList();
         }
     }
@@ -30,7 +35,17 @@ window.addEventListener('DOMContentLoaded', function () {
                 let code = window.otplib.authenticator.generate(element.secret);
                 let item = document.createElement('div');
                 item.dataset.id = element.id;
-                item.innerHTML = `<p class="code-row">${numberWithSpaces(code)}</p><p class="name-row">${element.name}</p>`;
+                item.innerHTML = `
+                <p class="code-row">
+                <span>${numberWithSpaces(code)}</span>
+                <span>
+                    <svg class="progress" width="1em" height="1em" viewBox="0 0 120 120">
+                        <circle class="progress_value" cx="60" cy="60" r="54" stroke-width="12" />
+                    </svg>
+                </span>
+                </p>
+                <p class="name-row">${element.name}</p>
+                `;
                 item.classList.add('authcode-item');
                 mainlist.appendChild(item);
             });
@@ -123,7 +138,6 @@ window.addEventListener('DOMContentLoaded', function () {
             var file = new Blob([window.localStorage.getItem("authcodes")], {type: "application/json"});
             var writeRequest = sdcard.addNamed(file, "kaiauth.json");
             writeRequest.onsuccess = function () {
-                var name = this.result;
                 alert(translate('dump-success'));
             }
             writeRequest.onerror = function () {
