@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', function () {
     function updateRemaining() {
         let remain = window.otplib.authenticator.timeRemaining();
         let step = window.otplib.authenticator.allOptions().step;
-        var processValue = document.getElementsByClassName('progress_value');
+        var processValue = document.getElementsByClassName('progress-value');
         [].forEach.call(processValue, element => {
             element.style.strokeDasharray = 2 * Math.PI * 54;
             element.style.strokeDashoffset = 2 * Math.PI * 54 * (1 - remain / step);
@@ -39,8 +39,8 @@ window.addEventListener('DOMContentLoaded', function () {
                 <p class="code-row">
                 <span>${numberWithSpaces(code)}</span>
                 <span>
-                    <svg class="progress" width="1em" height="1em" viewBox="0 0 120 120">
-                        <circle class="progress_value" cx="60" cy="60" r="54" stroke-width="12" />
+                    <svg class="progress" width="0.9em" height="0.9em" viewBox="0 0 120 120">
+                        <circle class="progress-value" cx="60" cy="60" r="54" stroke-width="12" />
                     </svg>
                 </span>
                 </p>

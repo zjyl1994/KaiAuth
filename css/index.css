@@ -38,7 +38,7 @@
     padding:2px 2px 2px 2px;
 }
 
-.progress_value {
+.progress-value {
     fill: none;
 	stroke: #eee;
 	stroke-linecap: round;
