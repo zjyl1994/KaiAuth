@@ -31,6 +31,9 @@
 .authcode-item > .name-row {
     padding:2px 2px 2px 2px;
     font-size: 1em;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .progress {

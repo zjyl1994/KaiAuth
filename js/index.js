@@ -24,6 +24,7 @@ window.addEventListener('DOMContentLoaded', function () {
             element.style.strokeDasharray = 2 * Math.PI * 54;
             element.style.strokeDashoffset = 2 * Math.PI * 54 * (1 - remain / step);
         });
+        document.getElementById('time-remaining').innerText = `${remain}s`;
         if (remain === step) {
             refreshCodeList();
         }
