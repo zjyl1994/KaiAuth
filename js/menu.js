@@ -1,18 +1,27 @@
 window.addEventListener('DOMContentLoaded', function () {
     var activityHandler = null;
     var menulist = document.getElementById('menulists');
-    var selectIndex = 0;
+    var selectIndex = 0,selectMin = 0;
 
     navigator.mozSetMessageHandler('activity', function(activityRequest) {
         activityHandler = activityRequest;
+        if(activityRequest.source.data.activeId == 0){
+            selectIndex = 3;
+            selectMin = 3;
+            var all = document.getElementsByClassName('authcode-related');
+            for (var i = 0; i < all.length; i++) {
+                all[i].style.color = 'grey';
+            }
+        }
+        selectItemByIndex();
     });
-    selectItemByIndex();
+    
 
     function selectItemByIndex() {
         [].forEach.call(menulist.children, function (el) {
             el.classList.remove('active');
         });
-        if (selectIndex > 5) selectIndex = 0;
+        if (selectIndex > 5) selectIndex = selectMin;
         let activeElem = menulist.children[selectIndex];
         activeElem.classList.add('active');
         activeElem.scrollIntoViewIfNeeded(false);
@@ -28,13 +37,13 @@ window.addEventListener('DOMContentLoaded', function () {
             case 'ArrowUp': //scroll up
             case 'ArrowLeft':
                 selectIndex--;
-                if (selectIndex < 0) selectIndex = 5;
+                if (selectIndex < selectMin) selectIndex = 5;
                 selectItemByIndex();
                 break;
             case 'ArrowDown': //scroll down
             case 'ArrowRight':
                 selectIndex++;
-                if (selectIndex > 5) selectIndex = 0;
+                if (selectIndex > 5) selectIndex = selectMin;
                 selectItemByIndex();
                 break;
             case 'Enter':

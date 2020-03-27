@@ -156,29 +156,36 @@ window.addEventListener('DOMContentLoaded', function () {
 				}
                 break;
             case 'SoftRight':
+                var activeItems = document.getElementsByClassName('active');
+                var authcodeActiveItem = activeItems.length != 0 ? parseInt(activeItems[0].dataset.id) : 0;
                 var menu = new MozActivity({
-					name: 'com.zjyl1994.kaiauth.Menu'
+                    name: 'com.zjyl1994.kaiauth.Menu',
+                    data: {activeId:authcodeActiveItem}
 				})
 				menu.onsuccess = function () {
-                    var activeItems = document.getElementsByClassName('active');
-                    var authcodeActiveItem = activeItems.length != 0 ? parseInt(activeItems[0].dataset.id) : 0;
                     switch(this.result){
                         case 'delete':
-                            var result = confirm(translate('delete-confirm'));
-                            if(result == true){
-                                authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
-                                refreshCodeList();
+                            if(authcodeActiveItem!=0){
+                                var result = confirm(translate('delete-confirm'));
+                                if(result == true){
+                                    authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
+                                    refreshCodeList();
+                                }
                             }
                             break;
                         case 'edit-name':
-                            var newname = prompt(translate('rename-prompt'))
-                            if (newname!=null && newname!=""){
-                                authcodes.find(obj => obj.id == authcodeActiveItem).name = newname;
-                                refreshCodeList();
+                            if(authcodeActiveItem!=0){
+                                var newname = prompt(translate('rename-prompt'))
+                                if (newname!=null && newname!=""){
+                                    authcodes.find(obj => obj.id == authcodeActiveItem).name = newname;
+                                    refreshCodeList();
+                                }
                             }
                             break;
                         case 'show-secret':
-                            alert(authcodes.find(obj => obj.id == authcodeActiveItem).secret);
+                            if(authcodeActiveItem!=0){
+                                alert(authcodes.find(obj => obj.id == authcodeActiveItem).secret);
+                            }
                             break;
                         case 'import-sdcard':
                             var result = confirm(translate('import-confirm'));
@@ -202,8 +209,6 @@ window.addEventListener('DOMContentLoaded', function () {
                             break;
                     }
                 }
-            default:
-                shortcodeKeyPress(e.key);
         }
     });
 }, false);
