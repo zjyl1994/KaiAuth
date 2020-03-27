@@ -8,7 +8,7 @@
 
 .authcode-item {
     display: block;
-    background: #eee;
+    background: #fff;
     color: #111;
     position: relative;
     width: 100%;
@@ -43,6 +43,6 @@
 
 .progress-value {
     fill: none;
-	stroke: #eee;
+	stroke: #fff;
 	stroke-linecap: round;
 }

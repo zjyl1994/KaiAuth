@@ -26,6 +26,11 @@
 			"href": "./add.html",
 			"disposition": "inline",
 			"returnValue": true
+		},
+    "com.zjyl1994.kaiauth.Menu": {
+			"href": "./menu.html",
+			"disposition": "inline",
+			"returnValue": true
 		}
 	},
   "default_locale": "en-US",

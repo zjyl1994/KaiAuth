@@ -53,48 +53,8 @@ window.addEventListener('DOMContentLoaded', function () {
             selectItemByIndex();
         }
     }
-    function shortcodeKeyPress(key){
-        if(key == 'Enter'){
-            shortCodeBuffer = '';
-            shortCodeActive = false;
-        }
-        if(key.length == 1){
-            shortCodeBuffer += key;
-        }
-        if(shortCodeActive){
-            document.getElementById('title').innerText = shortCodeBuffer;
-        }else{
-            document.getElementById('title').innerText = "KaiAuth";
-        }
-        if(key == '#'){
-            if(shortCodeActive){
-                switch (shortCodeBuffer) {
-                    case "*#0000#":
-                        alert("KaiAuth v1.1.0\nCopyright 2020 zjyl1994\nAll rights reserved");
-                        break;
-                    case "*#467678#":
-                        loadSDFile();
-                        break;
-                    case "*#397678#":
-                        dumpSDFile();
-                        break;
-                    case "*#7370#":
-                        var result = confirm(translate('reset-confirm'));
-                        if(result == true){
-                            window.localStorage.clear();
-                            alert(translate('reset-success'))
-                            init();
-                        }
-                        break;
-                }
-                shortCodeBuffer = '';
-                shortCodeActive = false;
-                document.getElementById('title').innerText = "KaiAuth";
-            }else{
-                shortCodeActive = true;
-                document.getElementById('title').innerText = shortCodeBuffer;
-            }
-        }
+    function aboutDialog(){
+        alert("KaiAuth v1.1.0\nCopyright 2020 zjyl1994\nAll rights reserved");
     }
     function selectItemByIndex() {
         [].forEach.call(mainlist.children, function (el) {
@@ -205,6 +165,42 @@ window.addEventListener('DOMContentLoaded', function () {
                     refreshCodeList();
                 }
                 break;
+            case 'Enter':
+                var menu = new MozActivity({
+					name: 'com.zjyl1994.kaiauth.Menu'
+				})
+				menu.onsuccess = function () {
+                    var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
+                    switch(this.result){
+                        case 'edit-name':
+                            break;
+                        case 'show-secret':
+                            break;
+                        case 'import-sdcard':
+                            var result = confirm(translate('import-confirm'));
+                            if(result == true){
+                                loadSDFile();
+                            }
+                            break;
+                        case 'export-sdcard':
+                            var result = confirm(translate('export-confirm'));
+                            if(result == true){
+                                dumpSDFile();
+                            }
+                            break;
+                        case 'wipe-data':
+                            var result = confirm(translate('reset-confirm'));
+                            if(result == true){
+                                window.localStorage.clear();
+                                alert(translate('reset-success'))
+                                init();
+                            }
+                            break;
+                        case 'about':
+                            aboutDialog();
+                            break;
+                    }
+                }
             default:
                 shortcodeKeyPress(e.key);
         }

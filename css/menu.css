@@ -1,0 +1,21 @@
+#menulists {
+    position: fixed; top:28px; left: 0; width: 100%; height: calc(100% - 58px);
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.menulist-item {
+    display: block;
+    color: #111;
+    background-color: #fff;
+    position: relative;
+    width: 100%;
+    padding:2px 2px 2px 2px;
+    font-size: 1.25em;
+}
+
+.menulist-item.active {
+    background: rgb(5, 76, 119);
+    color: #ffffff;
+}
