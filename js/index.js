@@ -158,20 +158,19 @@ window.addEventListener('DOMContentLoaded', function () {
 				}
                 break;
             case 'SoftRight':
-                var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
-                var result = confirm(translate('delete-confirm'));
-                if(result == true){
-                    authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
-                    refreshCodeList();
-                }
-                break;
-            case 'Enter':
                 var menu = new MozActivity({
 					name: 'com.zjyl1994.kaiauth.Menu'
 				})
 				menu.onsuccess = function () {
                     var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
                     switch(this.result){
+                        case 'delete':
+                            var result = confirm(translate('delete-confirm'));
+                            if(result == true){
+                                authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
+                                refreshCodeList();
+                            }
+                            break;
                         case 'edit-name':
                             break;
                         case 'show-secret':
@@ -183,10 +182,7 @@ window.addEventListener('DOMContentLoaded', function () {
                             }
                             break;
                         case 'export-sdcard':
-                            var result = confirm(translate('export-confirm'));
-                            if(result == true){
-                                dumpSDFile();
-                            }
+                            dumpSDFile();
                             break;
                         case 'wipe-data':
                             var result = confirm(translate('reset-confirm'));

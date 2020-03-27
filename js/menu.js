@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', function () {
         [].forEach.call(menulist.children, function (el) {
             el.classList.remove('active');
         });
-        if (selectIndex > 4) selectIndex = 0;
+        if (selectIndex > 5) selectIndex = 0;
         let activeElem = menulist.children[selectIndex];
         activeElem.classList.add('active');
         activeElem.scrollIntoViewIfNeeded(false);
@@ -28,13 +28,13 @@ window.addEventListener('DOMContentLoaded', function () {
             case 'ArrowUp': //scroll up
             case 'ArrowLeft':
                 selectIndex--;
-                if (selectIndex < 0) selectIndex = 4;
+                if (selectIndex < 0) selectIndex = 5;
                 selectItemByIndex();
                 break;
             case 'ArrowDown': //scroll down
             case 'ArrowRight':
                 selectIndex++;
-                if (selectIndex > 4) selectIndex = 0;
+                if (selectIndex > 5) selectIndex = 0;
                 selectItemByIndex();
                 break;
             case 'Enter':
