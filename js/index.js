@@ -3,8 +3,6 @@ window.addEventListener('DOMContentLoaded', function () {
     var translate = navigator.mozL10n.get;
     var mainlist = document.getElementById('authcodes');
     var authcodes = [], selectIndex = 0;
-    var shortCodeBuffer = '';
-    var shortCodeActive = false;
     init();
     // functions
     function init(){
@@ -162,7 +160,8 @@ window.addEventListener('DOMContentLoaded', function () {
 					name: 'com.zjyl1994.kaiauth.Menu'
 				})
 				menu.onsuccess = function () {
-                    var authcodeActiveItem = document.getElementsByClassName('active')[0].dataset.id;
+                    var activeItems = document.getElementsByClassName('active');
+                    var authcodeActiveItem = activeItems.length != 0 ? parseInt(activeItems[0].dataset.id) : 0;
                     switch(this.result){
                         case 'delete':
                             var result = confirm(translate('delete-confirm'));
@@ -172,8 +171,14 @@ window.addEventListener('DOMContentLoaded', function () {
                             }
                             break;
                         case 'edit-name':
+                            var newname = prompt(translate('rename-prompt'))
+                            if (newname!=null && newname!=""){
+                                authcodes.find(obj => obj.id == authcodeActiveItem).name = newname;
+                                refreshCodeList();
+                            }
                             break;
                         case 'show-secret':
+                            alert(authcodes.find(obj => obj.id == authcodeActiveItem).secret);
                             break;
                         case 'import-sdcard':
                             var result = confirm(translate('import-confirm'));
