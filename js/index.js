@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
     function aboutDialog(){
-        alert("KaiAuth v1.1.0\nCopyright 2020 zjyl1994\nAll rights reserved");
+        alert("KaiAuth v1.1.1\nCopyright 2020 zjyl1994.\nAll rights reserved.");
     }
     function selectItemByIndex() {
         [].forEach.call(mainlist.children, function (el) {
@@ -72,6 +72,9 @@ window.addEventListener('DOMContentLoaded', function () {
             if(element.id > maxID) maxID = element.id;
         });
         return maxID + 1;
+    }
+    function saveList(){
+        window.localStorage.setItem('authcodes', JSON.stringify(authcodes));
     }
     function loadSDFile(){
         var sdcard = navigator.getDeviceStorage('sdcard');
@@ -148,7 +151,7 @@ window.addEventListener('DOMContentLoaded', function () {
                             secret: gaDetail.query.secret
                         }
                         authcodes.push(item);
-                        window.localStorage.setItem('authcodes', JSON.stringify(authcodes));
+                        saveList();
                         init();
                         selectIndex = authcodes.length - 1;
                         selectItemByIndex();
@@ -169,6 +172,7 @@ window.addEventListener('DOMContentLoaded', function () {
                                 var result = confirm(translate('delete-confirm'));
                                 if(result == true){
                                     authcodes = authcodes.filter(obj => obj.id != authcodeActiveItem);
+                                    saveList();
                                     refreshCodeList();
                                 }
                             }
@@ -178,6 +182,7 @@ window.addEventListener('DOMContentLoaded', function () {
                                 var newname = prompt(translate('rename-prompt'))
                                 if (newname!=null && newname!=""){
                                     authcodes.find(obj => obj.id == authcodeActiveItem).name = newname;
+                                    saveList();
                                     refreshCodeList();
                                 }
                             }
