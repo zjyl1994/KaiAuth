@@ -4,21 +4,29 @@
 
 KaiAuth is a simple Google Authenticator alternative on KaiOS.
 
-You can find prebuild release in https://github.com/zjyl1994/KaiAuth/releases.
+# Screenshots
 
-Latest build is https://github.com/zjyl1994/KaiAuth/releases/download/1.0.2/kaiauth.zip. You can install this zip package via OmniSD. It work fine for me.
+![app_in_launcher](https://kaiauth.zjyl1994.com/img/app_in_launcher.png)
+![main_interface](https://kaiauth.zjyl1994.com/img/main_interface.png)
+![scan_qrcode](https://kaiauth.zjyl1994.com/img/scan_qrcode.png)
+![option_menu](https://kaiauth.zjyl1994.com/img/option_menu.png)
 
-Scan QR code maybe slow,keep patient and wait a moment,it will auto finish.
+# Install
 
-For advance user:
+## Omni SD
+- Download [kaiauth-omnisd](https://github.com/zjyl1994/KaiAuth/releases/download/v1.1.1/kaiauth-v1.1.1-omnisd.zip).
+- Copy this zip file to the apps directory of the memory card.
+- Open "OmniSD" and install this zip.
 
-Some useful short code:
-| Shortcode | Feature |
-| ---------- | ------------------------------------------------------- |
-| \*\#467678\# | load /sdcard/kaiauth.json as current data               |
-| \*\#397678\#  | dump current data to /sdcard/kaiauth.json               |
-| \*\#7370\#    | clean KaiAuth localStorage data (will lost all data!!!)|
-| \*\#0000\#    | get KaiAuth version                                    |
+## Web IDE
+- Download [kaiauth-webide](https://github.com/zjyl1994/KaiAuth/releases/download/v1.1.1/kaiauth-v1.1.1-webide.zip).
+- Extract this zip to a folder.
+- Click "Open Packaged App" and select the folder from the previous step.
+- Click "Install and Run" button.
 
-When you type short code in app, App title will change to word you type.
-If you want exit short code mode immediately, you can press center button on navigation key.
+# More information
+For more information please visit https://kaiauth.zjyl1994.com/ .
+
+I have submitted it to KaiStore, but need to wait for KaiStore review. It may be available for download in KaiStore in the near future.
+
+(Available in 🇺🇸 American English, 🇨🇳 Simplified Chinese, 🇹🇼 Traditional Chinese and 🇭🇰 Cantonese.)
